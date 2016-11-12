@@ -1,9 +1,47 @@
 var Home = {
 	controller: function () {
+		var c = this;
+
+		c.success = m.prop(false);
+		c.err = m.prop();
+		c.salutation = m.prop("");
+		c.message = m.prop("");
+		c.address1 = m.prop("");
+		c.address2 = m.prop("");
+		c.city = m.prop("");
+		c.state = m.prop("");
+		c.zip = m.prop("");
+		c.email = m.prop("");
+
+		this.save = function (e) {
+			e.preventDefault();
+			m.request({
+				"method": "POST",
+				"url": "/",
+				"data": {
+					Salutation: c.salutation(),
+					Message: c.message(),
+					Address1: c.address1(),
+					Address2: c.address2(),
+					City: c.city(),
+					State: c.state(),
+					Zip: c.zip(),
+					Email: c.email()
+				}
+			}).then(function (res) {
+				c.success(true)
+			}).catch(function (err) {
+				c.err(err)
+			})
+		};
+
 		return this;
 	},
 	view: function (c) {
-		return m("form.container",
+		return m("form", {
+				"class": "container",
+				"onsubmit": c.save
+			},
 			m("div.row",
 				m("div.col-xs-12",
 					m("h1", "Remember how you feel today.", m("br"), "Remind yourself to act tomorrow.")
@@ -26,7 +64,8 @@ var Home = {
 						"type": "text",
 						"class": "form-control",
 						"id": "salutation",
-						"placeholder": "Jane Roe"
+						"placeholder": "Jane Roe",
+						"oninput": m.withAttr("value", c.salutation)
 					}),
 					","
 				)
@@ -36,12 +75,13 @@ var Home = {
 						"class": "col-xs-12 form-group"
 					},
 					m("label", {
-						"for": "body"
+						"for": "message"
 					}, "In 2016, Trump won and I felt"),
 					m("textarea.form-control", {
 						"rows": 2,
-						"id": "body",
-						"placeholder": "..."
+						"id": "message",
+						"placeholder": "...",
+						"oninput": m.withAttr("value", c.message)
 					})
 				)
 			),
@@ -59,13 +99,15 @@ var Home = {
 						"type": "text",
 						"id": "address1",
 						"placeholder": "100 W Main St",
-						"class": "form-control"
+						"class": "form-control",
+						"oninput": m.withAttr("value", c.address1)
 					}),
 					m("input", {
 						"type": "text",
 						"id": "address2",
 						"placeholder": "Suite 4",
-						"class": "form-control"
+						"class": "form-control",
+						"oninput": m.withAttr("value", c.address2)
 					})
 				)
 			),
@@ -80,7 +122,8 @@ var Home = {
 						"type": "text",
 						"id": "city",
 						"placeholder": "Oklahoma City",
-						"class": "form-control"
+						"class": "form-control",
+						"oninput": m.withAttr("value", c.city)
 					})
 				),
 				m("div", {
@@ -93,7 +136,8 @@ var Home = {
 						"type": "text",
 						"id": "state",
 						"placeholder": "OK",
-						"class": "form-control"
+						"class": "form-control",
+						"oninput": m.withAttr("value", c.state)
 					})),
 				m("div", {
 						"class": "form-group col-xs-4"
@@ -105,7 +149,8 @@ var Home = {
 						"type": "text",
 						"id": "zip",
 						"placeholder": "73102",
-						"class": "form-control"
+						"class": "form-control",
+						"oninput": m.withAttr("value", c.zip)
 					}))
 			),
 			m("div.row", m("div", {
@@ -174,16 +219,26 @@ var Home = {
 				)
 			)),
 			m("div.row", m("div", {
+					"class": "col-xs-12 form-group",
+				},
+				m("button", {
+					"type": "submit",
+					"class": "btn btn-default",
+					"onclick": c.save
+				}, "Send my postcard!")
+			)),
+			m("div.row", m("div", {
 					"class": "col-xs-12 form-group"
 				},
 				m("label", {
 					"for": "email"
 				}, "Want to help us send more postcards? Sign up with your email address:"),
 				m("input", {
-					"type": "text",
+					"type": "email",
 					"class": "form-control",
 					"id": "email",
-					"placeholder": "jane.roe@gmail.com"
+					"placeholder": "jane.roe@gmail.com",
+					"oninput": m.withAttr("value", c.email)
 				})
 			))
 		);
