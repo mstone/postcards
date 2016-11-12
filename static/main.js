@@ -26,7 +26,7 @@ var Home = {
 						"type": "text",
 						"class": "form-control",
 						"id": "salutation",
-						"placeholder": "Jane"
+						"placeholder": "Jane Roe"
 					}),
 					","
 				)
@@ -58,11 +58,13 @@ var Home = {
 					m("input", {
 						"type": "text",
 						"id": "address1",
+						"placeholder": "100 W Main St",
 						"class": "form-control"
 					}),
 					m("input", {
 						"type": "text",
 						"id": "address2",
+						"placeholder": "Suite 4",
 						"class": "form-control"
 					})
 				)
@@ -77,6 +79,7 @@ var Home = {
 					m("input", {
 						"type": "text",
 						"id": "city",
+						"placeholder": "Oklahoma City",
 						"class": "form-control"
 					})
 				),
@@ -89,6 +92,7 @@ var Home = {
 					m("input", {
 						"type": "text",
 						"id": "state",
+						"placeholder": "OK",
 						"class": "form-control"
 					})),
 				m("div", {
@@ -100,6 +104,7 @@ var Home = {
 					m("input", {
 						"type": "text",
 						"id": "zip",
+						"placeholder": "73102",
 						"class": "form-control"
 					}))
 			),
