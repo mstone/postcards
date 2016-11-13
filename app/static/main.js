@@ -59,10 +59,14 @@ var Home = {
 				)
 			),
 			m("div.row",
-				m("div.col-xs-12",
-					m("p", "In the wake of the 2016 election many of us are having some pretty strong feelings, and we're looking for ways to get involved, but as anyone with a New Year's resolution knows, life can get in the way of the best intentioned plans.  We invite you to write yourself a postcard today, we promise to print and send your postcard 6 months before the next election – early enough to get involved.")
+				m("div", {
+						"class": "col-xs-12 col-md-8"
+					},
+					m("p", "In the wake of the 2016 election many of us are having some pretty strong feelings, and we're looking for ways to get involved, but as anyone with a New Year's resolution knows, life can get in the way of the best intentioned plans."),
+					m("p", "We invite you to write yourself a postcard today, we promise to print and send your postcard 6 months before the next election – early enough to get involved.")
 				)
 			),
+			m("br"),
 			m("div.row",
 				m("div", {
 						"class": "col-xs-12 form-group form-inline"
@@ -77,19 +81,18 @@ var Home = {
 						"id": "salutation",
 						"placeholder": "Jane Roe",
 						"oninput": m.withAttr("value", c.salutation)
-					}),
-					","
+					})
 				)
 			),
 			m("div.row",
 				m("div", {
-						"class": "col-xs-12 form-group"
+						"class": "col-xs-12 col-md-6 form-group"
 					},
 					m("label", {
 						"for": "message"
 					}, "In 2016, Trump won and I felt"),
 					m("textarea.form-control", {
-						"rows": 2,
+						"rows": 4,
 						"id": "message",
 						"placeholder": "...",
 						"oninput": m.withAttr("value", c.message)
@@ -98,14 +101,12 @@ var Home = {
 			),
 			m("div.row",
 				m("div", {
-						"class": "form-group col-xs-12",
+						"class": "form-group col-xs-12 col-md-6",
 					},
 					m("label", {
 						"for": "address1",
 						"class": ""
 					}, "Street address"),
-					" ",
-					m("small", "(Note: We will use your address to send you the reminder you wrote above and for no other purpose.)"),
 					m("input", {
 						"type": "text",
 						"id": "address1",
@@ -124,7 +125,7 @@ var Home = {
 			),
 			m("div.row",
 				m("div", {
-						"class": "form-group col-xs-4"
+						"class": "form-group col-xs-4 col-md-3"
 					},
 					m("label", {
 						"for": "city"
@@ -138,7 +139,7 @@ var Home = {
 					})
 				),
 				m("div", {
-						"class": "form-group col-xs-4"
+						"class": "form-group col-xs-4 col-md-1"
 					},
 					m("label", {
 						"for": "state"
@@ -151,7 +152,7 @@ var Home = {
 						"oninput": m.withAttr("value", c.state)
 					})),
 				m("div", {
-						"class": "form-group col-xs-4"
+						"class": "form-group col-xs-4 col-md-2"
 					},
 					m("label", {
 						"for": "zip"
@@ -225,25 +226,16 @@ var Home = {
 							"name": "election",
 							"value": "civil"
 						}),
-						"Protecting civil liberties outside of Washington"
+						"Protecting civil liberties beyond Washington"
 					)
 				)
 			)),
 			m("div.row", m("div", {
-					"class": "col-xs-12 form-group",
-				},
-				m("button", {
-					"type": "submit",
-					"class": "btn btn-default",
-					"onclick": c.save
-				}, "Send my postcard!")
-			)),
-			m("div.row", m("div", {
-					"class": "col-xs-12 form-group"
+					"class": "col-xs-12 col-md-6 form-group"
 				},
 				m("label", {
 					"for": "email"
-				}, "Want to help us send more postcards? Sign up with your email address:"),
+				}, "Want to help us send more postcards? (optional)"),
 				m("input", {
 					"type": "email",
 					"class": "form-control",
@@ -251,6 +243,15 @@ var Home = {
 					"placeholder": "jane.roe@gmail.com",
 					"oninput": m.withAttr("value", c.email)
 				})
+			)),
+			m("div.row", m("div", {
+					"class": "col-xs-12 form-group",
+				},
+				m("button", {
+					"type": "submit",
+					"class": "btn btn-primary",
+					"onclick": c.save
+				}, "Send my postcard!")
 			))
 		);
 	}
