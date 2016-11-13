@@ -15,20 +15,29 @@ var Home = {
 
 		this.save = function (e) {
 			e.preventDefault();
+
+			var recipient_pk = sodium.from_hex("1dbcd662fc6aa689321eb659b7d5c537a9c69951b1aa808ef5b4759c2ac56864");
+			var plaintext = JSON.stringify({
+				Salutation: c.salutation(),
+				Message: c.message(),
+				Address1: c.address1(),
+				Address2: c.address2(),
+				City: c.city(),
+				State: c.state(),
+				Zip: c.zip(),
+				Email: c.email()
+			});
+
+			var ciphertext = sodium.to_hex(sodium.crypto_box_seal(plaintext, recipient_pk));
+			var hash = sodium.to_hex(sodium.crypto_generichash(16, plaintext));
+
 			m.request({
 				"method": "POST",
 				"url": "/",
 				"data": {
-					"Data": sodium.to_hex(sodium.crypto_generichash(64, JSON.stringify({
-						Salutation: c.salutation(),
-						Message: c.message(),
-						Address1: c.address1(),
-						Address2: c.address2(),
-						City: c.city(),
-						State: c.state(),
-						Zip: c.zip(),
-						Email: c.email()
-					})))
+					"Version": 1,
+					"Key": hash,
+					"Data": ciphertext
 				}
 			}).then(function (res) {
 				c.success(true)

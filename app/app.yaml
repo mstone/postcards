@@ -1,11 +1,13 @@
 runtime: go
 api_version: go1
 threadsafe: true
+inbound_services:
+- warmup
 
 nobuild_files: 
-- cmd/.*
+- .*cmd.*
 skip_files:
-- ^cmd/.*
+- .*cmd.*
 
 handlers:
 - url: /static
