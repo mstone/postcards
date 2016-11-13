@@ -124,7 +124,7 @@ var Home = {
 						"class": "col-xs-12 col-md-8"
 					},
 					m("p", "In the wake of the 2016 election many of us are having some pretty strong feelings, and we're looking for ways to get involved, but as anyone with a New Year's resolution knows, life can get in the way of the best intentioned plans."),
-					m("p", "We invite you to write yourself a postcard today, we promise to print and send your postcard 6 months before the next election – early enough to get involved.")
+					m("p", "We invite you to write yourself a postcard today. We will print and send your postcard 6 months before the next election – early enough to get involved.")
 				)
 			),
 			m("br"),
@@ -248,7 +248,8 @@ var Home = {
 				},
 				m("label", {
 					"for": "email"
-				}, "Want to help us send more postcards? (optional)"),
+				}, "Email Signup (optional)"),
+				m("p", m("small", "(We're a small team not affiliated with any candidate and while we can commit to sending our first thousand or so cards, we might need your help after that. :-)")),
 				m("input", {
 					"type": "email",
 					"class": "form-control",
