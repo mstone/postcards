@@ -125,7 +125,7 @@ var Home = {
 			),
 			m("div.row",
 				m("div", {
-						"class": "form-group col-xs-4 col-md-3"
+						"class": "form-group col-xs-6 col-md-3"
 					},
 					m("label", {
 						"for": "city"
@@ -139,7 +139,7 @@ var Home = {
 					})
 				),
 				m("div", {
-						"class": "form-group col-xs-4 col-md-1"
+						"class": "form-group col-xs-3 col-md-1"
 					},
 					m("label", {
 						"for": "state"
