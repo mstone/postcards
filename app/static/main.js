@@ -11,6 +11,7 @@ var Home = {
 		c.city = m.prop("");
 		c.state = m.prop("");
 		c.zip = m.prop("");
+		c.election = m.prop("");
 		c.email = m.prop("");
 
 		this.save = function (e) {
@@ -25,6 +26,7 @@ var Home = {
 				City: c.city(),
 				State: c.state(),
 				Zip: c.zip(),
+				Election: c.election(),
 				Email: c.email()
 			});
 
@@ -35,7 +37,7 @@ var Home = {
 				"method": "POST",
 				"url": "/",
 				"data": {
-					"Version": 1,
+					"Version": 2,
 					"Key": hash,
 					"Data": ciphertext
 				}
@@ -49,6 +51,65 @@ var Home = {
 		return this;
 	},
 	view: function (c) {
+		var radio = function (value, label, prop) {
+			var checked = prop() === value;
+			var attrs = {
+				"type": "radio",
+				"value": value,
+				"name": "election",
+				"onclick": m.withAttr("value", prop)
+			};
+			if (checked) {
+				attrs.checked = true;
+			}
+			return m("div", {
+					"class": "radio"
+				},
+				m("label",
+					m("input", attrs),
+					label
+				)
+			)
+		};
+
+		if (c.success()) {
+			return m("div.container",
+				m("div.row",
+					m("div.col-xs-12",
+						m("h1", "Thanks! :-)"))),
+				m("div.row",
+					m("div.col-xs-12",
+						m("h3", "-- the Nov. 8 Postcard Team"))),
+				m("br"),
+				m("br"),
+				m("div.row",
+					m("div.col-xs-12",
+						m("button", {
+							"class": "btn btn-primary",
+							"onclick": function (e) {
+								c.success(false);
+							}
+						}, "Continue"))));
+		}
+		if (c.err()) {
+			return m("div.container",
+				m("div.row",
+					m("div.col-xs-12",
+						m("h1", "Sorry, something went wrong; please try again! :-)"))),
+				m("div.row",
+					m("div.col-xs-12",
+						m("h3", "-- the Nov. 8 Postcard Team"))),
+				m("br"),
+				m("br"),
+				m("div.row",
+					m("div.col-xs-12",
+						m("button", {
+							"class": "btn btn-primary",
+							"onclick": function (e) {
+								c.success(false);
+							}
+						}, "Try Again"))));
+		}
 		return m("form", {
 				"class": "container",
 				"onsubmit": c.save
@@ -80,6 +141,7 @@ var Home = {
 						"class": "form-control",
 						"id": "salutation",
 						"placeholder": "Jane Roe",
+						"value": c.salutation(),
 						"oninput": m.withAttr("value", c.salutation)
 					})
 				)
@@ -95,6 +157,7 @@ var Home = {
 						"rows": 4,
 						"id": "message",
 						"placeholder": "...",
+						"value": c.message(),
 						"oninput": m.withAttr("value", c.message)
 					})
 				)
@@ -112,6 +175,7 @@ var Home = {
 						"id": "address1",
 						"placeholder": "100 W Main St",
 						"class": "form-control",
+						"value": c.address1(),
 						"oninput": m.withAttr("value", c.address1)
 					}),
 					m("input", {
@@ -119,6 +183,7 @@ var Home = {
 						"id": "address2",
 						"placeholder": "Suite 4",
 						"class": "form-control",
+						"value": c.address2(),
 						"oninput": m.withAttr("value", c.address2)
 					})
 				)
@@ -135,6 +200,7 @@ var Home = {
 						"id": "city",
 						"placeholder": "Oklahoma City",
 						"class": "form-control",
+						"value": c.city(),
 						"oninput": m.withAttr("value", c.city)
 					})
 				),
@@ -149,6 +215,7 @@ var Home = {
 						"id": "state",
 						"placeholder": "OK",
 						"class": "form-control",
+						"value": c.state(),
 						"oninput": m.withAttr("value", c.state)
 					})),
 				m("div", {
@@ -162,6 +229,7 @@ var Home = {
 						"id": "zip",
 						"placeholder": "73102",
 						"class": "form-control",
+						"value": c.zip(),
 						"oninput": m.withAttr("value", c.zip)
 					}))
 			),
@@ -169,66 +237,11 @@ var Home = {
 					"class": "col-xs-12 form-group"
 				},
 				m("label", "I'm most excited to get involved in"),
-				m("div", {
-						"class": "radio"
-					},
-					m("label",
-						m("input", {
-							"type": "radio",
-							"name": "election",
-							"value": "house"
-						}),
-						"House elections"
-					)
-				),
-				m("div", {
-						"class": "radio"
-					},
-					m("label",
-						m("input", {
-							"type": "radio",
-							"name": "election",
-							"value": "senate"
-						}),
-						"Senate elections"
-					)
-				),
-				m("div", {
-						"class": "radio"
-					},
-					m("label",
-						m("input", {
-							"type": "radio",
-							"name": "election",
-							"value": "president"
-						}),
-						"Presidential elections"
-					)
-				),
-				m("div", {
-						"class": "radio"
-					},
-					m("label",
-						m("input", {
-							"type": "radio",
-							"name": "election",
-							"value": "state"
-						}),
-						"State and local elections"
-					)
-				),
-				m("div", {
-						"class": "radio"
-					},
-					m("label",
-						m("input", {
-							"type": "radio",
-							"name": "election",
-							"value": "civil"
-						}),
-						"Protecting civil liberties beyond Washington"
-					)
-				)
+				radio("house", "House elections", c.election),
+				radio("senate", "Senate elections", c.election),
+				radio("president", "Presidential elections", c.election),
+				radio("state", "State and local elections", c.election),
+				radio("civil", "Protecting civil liberties beyond Washington", c.election)
 			)),
 			m("div.row", m("div", {
 					"class": "col-xs-12 col-md-6 form-group"
@@ -241,6 +254,7 @@ var Home = {
 					"class": "form-control",
 					"id": "email",
 					"placeholder": "jane.roe@gmail.com",
+					"value": c.email(),
 					"oninput": m.withAttr("value", c.email)
 				})
 			)),
