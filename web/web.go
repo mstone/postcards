@@ -14,6 +14,10 @@ func init() {
 	http.HandleFunc("/", handler)
 }
 
+type Blob struct {
+	Data string
+}
+
 type Postcard struct {
 	Salutation string
 	Message    string
@@ -32,14 +36,14 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	case "POST":
 		defer r.Body.Close()
 
-		card := Postcard{}
-		if err := json.NewDecoder(r.Body).Decode(&card); err != nil {
+		blob := Blob{}
+		if err := json.NewDecoder(r.Body).Decode(&blob); err != nil {
 			log.Errorf(ctx, "post err: %q", errors.Trace(err))
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
 
-		log.Infof(ctx, "post got: %+v", card)
+		log.Infof(ctx, "post got: %+v", blob)
 		w.WriteHeader(http.StatusOK)
 	case "GET":
 		http.Redirect(w, r, "/static/main.html", http.StatusFound)

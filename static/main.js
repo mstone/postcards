@@ -19,14 +19,16 @@ var Home = {
 				"method": "POST",
 				"url": "/",
 				"data": {
-					Salutation: c.salutation(),
-					Message: c.message(),
-					Address1: c.address1(),
-					Address2: c.address2(),
-					City: c.city(),
-					State: c.state(),
-					Zip: c.zip(),
-					Email: c.email()
+					"Data": sodium.to_hex(sodium.crypto_generichash(64, JSON.stringify({
+						Salutation: c.salutation(),
+						Message: c.message(),
+						Address1: c.address1(),
+						Address2: c.address2(),
+						City: c.city(),
+						State: c.state(),
+						Zip: c.zip(),
+						Email: c.email()
+					})))
 				}
 			}).then(function (res) {
 				c.success(true)
