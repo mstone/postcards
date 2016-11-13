@@ -4,6 +4,8 @@ threadsafe: true
 
 skip_files:
 - ^cmd
+- ^keys
+- ^acme
 
 handlers:
 - url: /static

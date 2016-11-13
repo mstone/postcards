@@ -2,7 +2,9 @@ package web
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
+	"strings"
 
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/log"
@@ -11,6 +13,7 @@ import (
 )
 
 func init() {
+	http.HandleFunc(acmePrefix, acmeHandler)
 	http.HandleFunc("/", handler)
 }
 
@@ -27,6 +30,16 @@ type Postcard struct {
 	State      string
 	Zip        string
 	Email      string
+}
+
+const acmePrefix = "/.well-known/acme-challenges/"
+const acmeFingerprint = "ZqVBf2SKHT-hfXZqASyY0ngetlEP5XFOhocQibrqEsw"
+
+func acmeHandler(w http.ResponseWriter, r *http.Request) {
+	challenge := strings.TrimPrefix(r.URL.Path, acmePrefix)
+	w.Header().Set("Content-Type", "text/plain")
+	w.WriteHeader(200)
+	fmt.Fprintf(w, "%s.%s", challenge, acmeFingerprint)
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
