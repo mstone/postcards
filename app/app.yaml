@@ -2,10 +2,10 @@ runtime: go
 api_version: go1
 threadsafe: true
 
+nobuild_files: 
+- cmd/.*
 skip_files:
-- ^cmd
-- ^keys
-- ^acme
+- ^cmd/.*
 
 handlers:
 - url: /static
